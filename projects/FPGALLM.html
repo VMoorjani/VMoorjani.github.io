@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPGA LLM - Vishal Moorjani</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <main>
+        <h1>FPGA LLM</h1>
+
+        <article class="blog-post">
+            <div class="date">April 24, 2025</div>
+            <p>I first worked on FPGAs + AI in my Digital Systems class where for my final project I ran a model for handwriting recognition on the FPGA we were given. 
+                Since MNIST is a relatively easy task, a single linear linear layer performed well enough. I also cut some other corners by converting the inputs into binary, 
+                which meant that I didn't need to perform any floating point multiplications. FPGAs don't seem ideal for floating point operations, 
+                so it'll be interesting to see if there are any performace gains.
+                From what I remember, it took 8 clock cycles for addition and 12-13 for multiplication (I'm not too worried about this because I think I can pipeline to process 12 inputs at a time). 
+                I think I'm going to start with a very small model like SmolLM and integer quantization and play it by ear. For the MNIST
+                stuff I wrote a Python script to convert the weights (only 1 weight matrix) into a text file with the binary representations of the weights, and loaded that into ROM.
+                That worked okay for something with only 7840 parameters, but there's no way that'll work for 135M parameters. It'll also be interesting to 
+                figure out tokenization, activation functions, different kinds of attention etc. I'll start by getting Vivado etc. set up and writing a module for INT4 multiplication. 
+                From there I can work on matrix muliplications, and then fill in the rest. I should also check what board AWS EC2 F2 instances have, and work off those.</p>
+        </article>
+
+    </main>
+</body>
+</html> 
