@@ -26,3 +26,20 @@ body {
     font-size: 1.5em;
     margin-bottom: 15px;
 }
+
+.blog-post img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post .image-caption {
+    text-align: center;
+    color: #666;
+    font-size: 0.9em;
+    margin-top: -15px;
+    margin-bottom: 20px;
+}
