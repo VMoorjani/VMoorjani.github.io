@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0 20px;
     text-align: left;
+    max-width: 100%;
 }
 
 .blog-post {
@@ -27,7 +28,7 @@ body {
 }
 
 .blog-post img {
-    max-width: 100%;
+    box-sizing: border-box;
     height: auto;
     display: block;
     margin: 20px auto;
