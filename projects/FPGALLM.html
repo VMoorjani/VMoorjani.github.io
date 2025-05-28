@@ -18,12 +18,13 @@
                 Vivado will apparently implement the adder that is the most efficient (although if I'm not LUT or DSP contstrained might be interestint to experiment with different kinds).
                 I also wrote a testbench for positive and negative numbers and it seems to work. I decided to implement an accumlator instead of an adder, because I can't think
                 of a place where you would not be accumulating the results for the forward pass (although as I am writing this I wonder how the position embeddings are added for
-                qunatized models, and those might require a regular adder). The next step is to implement a multiplier, and then I should have enough to check an int4 matrix
-                multiplication. I was reading a little bit about how the forward pass happens for quantized models, and it seems like INT8 x INT8 => INT32, then the bias is added, 
+                qunatized models, and those might require a regular addition operation). The next step is to implement a multiplier, and then I should have enough to check an int4 matmul.
+                I was reading a little bit about how the forward pass happens for quantized models, and it seems like INT8 x INT8 => INT32, then the bias is added, 
                 and the output is requantized. This is also something I'll have to implement later. 
                 Again, while writing this I wonder if the accumulator is the best way to go about this or not. While performing a matmul, 
                 one would multiply a row and a column entry-wise, and then add all of them together. Imagine I perform n multiplications in parallel (based on 
-                how many multipliers I have), to add all of them to the same register using the accumulator as it is implemented right now, it would take me n clock cycles (or n - 1 if it just starts out with the value of the first multiplication). Instead, I could create an adder, that 
+                how many multipliers I have), to add all of them to the same register using the accumulator as it is implemented right now, it would take me n clock cycles 
+                (or n - 1 if it just starts out with the value of the first multiplication). Instead, I could create an adder, that 
                 adds multiple numbers together, and then that output is what is stored in the register. Perhaps implementing an adder like this would be better, which with the + operation is easy.
                 Also, since I will be performing the multiplication first, I would not be adding 4 bit numbers, because the output could be upto 8 bits (-8*-8 = 64).
                 It's probably a good idea to implement a 4 bit matmul module first, see how that goes and decide what I need. The simulations are cool to look at anyway.
