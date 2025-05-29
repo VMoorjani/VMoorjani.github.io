@@ -11,6 +11,27 @@
         <h1>FPGA LLM</h1>
 
         <article class="blog-post">
+            <div class="date">April 28, 2025</div>
+            <p>I have read that TPUs use systolic arrays for their operations, so I spent some time looking into what they are, how they are implemented, 
+                and how I can use them for matrix multiplication. However, given that I haven't worked with SystemVerilog, I've implemented a simple, 2 for-loop implementation. 
+                This is not efficient, but I figure if I start here I can work on implementing something faster later. I think the general flow I will follow is: 
+                2 for loops => row * column in parallel => systolic array. One of the things I had a hard time with for the MNIST stuff was reading in weights from BRAM. 
+                I imagine that is one of the most important things for me to do (figuring out how and where to read the weights from) so before making anything faster, 
+                I should spend some time figuring out how this whole thing is going to be structured. Reading and using weights is what I should work on next.
+                Based on some math that I did very quickly while working on this, I should be able to support upto 512 dimension matmul without overflowing
+                (INT4 x INT4 => INT8 which has the range -64 to 63, 16-bit accumlator can have values from -2^15 to 2^15 - 1, so 2^15 / 64 = 512). I don't know if any matmul goes 
+                beyond 512 dimensions for SmolLM, so will leave it at this for now. Going up to 32 bits requires changing literally 2 numbers so can make that change any time 
+                (will require more resources etc. but I don't think I'm pushing the bounds of a $15000 board just yet). I remember that there are hazards and stuff that can go wrong 
+                when actually running on hardware, so although most of what I am doing is focused around getting it to run in simulation, I should probably be mindful of this when measuring
+                performance increase, otherwise I could set the clock speed to whatever I want and say that the performance is great. 
+
+                <img src="../images/FPGALLM/Int4MatMul.png" alt="Simulation of Int4 MatMul">
+                <div class="image-caption">Simulation of Int4 MatMul [[1, 2], [3, 4]] x [[5, 6], [7, -8]] => [[19, -10], [43, -14]] 
+                    and [[7, -8], [-4, 0]] x [[-1, 3], [2, -5]] => [[-23, 61], [4, -12]]</div>
+            </p>
+        </article>
+
+        <article class="blog-post">
             <div class="date">April 27, 2025</div>
             <p>I spent some time getting the Vitis suite installed. They don't have the boards used on EC2 F2 instances, so I picked whatever was closest, 
                 and since it's been a while since I worked with SystemVerilog I decided a good place to start would probably be with the ALU.
