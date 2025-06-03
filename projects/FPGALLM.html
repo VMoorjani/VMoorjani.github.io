@@ -11,6 +11,18 @@
         <h1>FPGA LLM</h1>
 
         <article class="blog-post">
+            <div class="date">June 3, 2025</div>
+            <p> I finally got access to the AWS account that has all the Nash credits, but for some reason I can't create any new EC2 instance. I also learned that 
+                my understanding of how working on AWS will work was wrong. I don't need to create an F2 instance to be able to develop for FPGAs, I can use any instance
+                with their FPGA AMI, and then the bitstream that is generated will run on an F2 instance. While waiting for a response from AWS support, I've decided to look
+                at ways that I can parallelize the matrix multiplication. I've decided that I'm going to push the systolic array stuff back further than I initially expected, 
+                to get it to run first before I make any big improvements. While I wait though, I think I'm going to try to process more than 1 multiply-and-accumulate operation
+                in 1 clock cycle. I think I'm going to do this with like multiple accumulators that then get added together, but I'm not entirely sure. I also plan to work on 
+                some of the smaller projects like the PC-iOS airdrop, and multi clipboard. 
+            </p>
+        </article>
+
+        <article class="blog-post">
             <div class="date">April 28, 2025</div>
             <p>I have read that TPUs use systolic arrays for their operations, so I spent some time looking into what they are, how they are implemented, 
                 and how I can use them for matrix multiplication. However, given that I haven't worked with SystemVerilog, I've implemented a simple, 2 for-loop implementation. 
