@@ -11,6 +11,37 @@
         <h1>FPGA LLM</h1>
 
         <article class="blog-post">
+            <div class="date">June 10, 2025</div>
+            <p> Morning: I didn't realise that setting everything up on AWS would take as long as it did. I tried all kinds of tools before going back to VSCode and Remote SSH. 
+                I also spent some time looking at their provided examples, this seems like something I could do. Since I'm using the command line to run simulations and 
+                stuff I'm not sure how things are going to look. I use the simulation for debugging stuff, and it seems like I can do that here too (I made like a counter
+                module just to try things and it worked) but through like print statements? For whatever reason the Vivado GUI doesn't work so until I can figure that out, 
+                I'm stuck with the CLI. 
+            </p>
+
+            <p> Evening: I didn't realise that I have no real way to show different "blogs" from the same day until I started writing this. I'll fix that at some point. 
+                After spending more time understanding exactly how this F2 instance stuff works, I have to say that I can see why AWS is so big 
+                (I know it's not because of FPGAs, but I mean this more in like a wow if they can do this everything they have must be insane.), and suffering through their 
+                support was worth it. What they've done for me is basically turn the FPGA into my GPU. They allow you to write stuff in C/C++ to be able to communicate with
+                the FPGA. They also allow you to write stuff in SystemVerilog which is run on the FPGA. So, for the final LLM stuff, I'll be able to accept inputs and tokenize
+                in C++, which is such a lifesaver because I hadn't thought about how to do it on an FPGA. The FPGA just has to do the heavy lifting (which makes so much sense).
+                Currently testing my Int4 matmul stuff on AWSs FPGA. Pretty cool.
+            </p>
+        </article>
+
+        <article class="blog-post">
+            <div class="date">June 9, 2025</div>
+            <p> I've spent some time understanding how exactly the HBM works and how I can use it. Each board has 16GB of HBM 
+                (which is way more than I need - a 135M parameter model in INT4 will use 67.5MB of space). You need to use the AXI protocol to communicate with it. 
+                Also, according to the README it uses AXI3 at 450MHz (which seems slow? I remember when I built a PC like 7 years ago the DDR4 ram I had was at 3200 MHz).
+                It has some AXI4 conversion layer which is at 250MHz. I'm not sure about why the discrepency, or what the differences are so I should spend some time reading 
+                about this (they have modules for the conversion from AXI4 to AXI3 and for the HBM IP). 
+
+                Sidenote: I'm using instance connect on EC2, and when I try to ctrl + shift + c firefox opens up the inspector. More reason to finish the multi clipboard.
+            </p>
+        </article>
+
+        <article class="blog-post">
             <div class="date">June 8, 2025</div>
             <p> FINALLY! After what has felt like an eternity of back and forth with AWS support they finally unblocked by account. I've already set up my instance,
                 and am figuring out how to get all teh Vivado stuff to work before I move to working on this full time. Not much progress has been made on the FPGALLM front
