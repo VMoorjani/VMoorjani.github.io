@@ -11,6 +11,20 @@
         <h1>FPGA LLM</h1>
 
         <article class="blog-post">
+            <div class="date">June 18, 2025</div>
+            <p> Evening: I've been working on this stuff for a while now, and it might be one of the hardest things I've ever done. The documentation is quite bad, and the examples
+                are so large and overwhelming. AWS has made quite a few changes between F1 and F2, so many resources are outdated. 
+                I am also completely out of my depth with the SystemVerilog stuff they do in their examples. So, 
+                I decided to start from the most minimal example. I have spent SO LONG on creating a counter (the counter wasn't the hard part,
+                figuing out how to "wire" all the AXI stuff together was) and it's still not done. But, I can now elaborate it and run a simulation that turns it on. 
+                This means that all my OCL connections (AXI stuff) are working. 
+                I've set up the counter such that you can set a reset value, enable/disable it, and reset it to the reset value. All through AXI transactions. 
+                Now, it's time to run a proper test on just the hardware, and then test it with the software.
+                Once that's done, I can move on to working with the HBM.
+            </p>
+        </article>
+
+        <article class="blog-post">
             <div class="date">June 10, 2025</div>
             <p> Morning: I didn't realise that setting everything up on AWS would take as long as it did. I tried all kinds of tools before going back to VSCode and Remote SSH. 
                 I also spent some time looking at their provided examples, this seems like something I could do. Since I'm using the command line to run simulations and 
