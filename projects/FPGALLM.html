@@ -11,7 +11,7 @@
         <h1>FPGA LLM</h1>
 
         <article class="blog-post">
-            <div class="date">June 19, 2025</div>
+            <div class="date">June 22, 2025</div>
             <p> Night: I forgot to update this with what I've been doing, but I spent a long time trying to figure out how to get waveforms. 
                 Waveforms were a great way for me to debug stuff, so I wanted to get it to work. I couldn't. I just can't get Vivado to open.
                 I'm generating the waveform files, I just can't get it to open. So, I turned to python and of course there is a package
@@ -110,7 +110,7 @@
         </article>
 
         <article class="blog-post">
-            <div class="date">April 28, 2025</div>
+            <div class="date">May 28, 2025</div>
             <p>I have read that TPUs use systolic arrays for their operations, so I spent some time looking into what they are, how they are implemented, 
                 and how I can use them for matrix multiplication. However, given that I haven't worked with SystemVerilog, I've implemented a simple, 2 for-loop implementation. 
                 This is not efficient, but I figure if I start here I can work on implementing something faster later. I think the general flow I will follow is: 
@@ -131,7 +131,7 @@
         </article>
 
         <article class="blog-post">
-            <div class="date">April 27, 2025</div>
+            <div class="date">May 27, 2025</div>
             <p>I spent some time getting the Vitis suite installed. They don't have the boards used on EC2 F2 instances, so I picked whatever was closest, 
                 and since it's been a while since I worked with SystemVerilog I decided a good place to start would probably be with the ALU.
                 In ECE385 we learned about different kinds of adders (ripple carry, carry lookahead, carry select) but I'm just going to use the + operation because 
@@ -156,7 +156,7 @@
         </article>
 
         <article class="blog-post">
-            <div class="date">April 24, 2025</div>
+            <div class="date">May 24, 2025</div>
             <p>I first worked on FPGAs + AI in my Digital Systems class where for my final project I ran a model for handwriting recognition on the FPGA we were given. 
                 Since MNIST is a relatively easy task, a single linear linear layer performed well enough. I also cut some other corners by converting the inputs into binary, 
                 which meant that I didn't need to perform any floating point multiplications. FPGAs don't seem ideal for floating point operations, 
