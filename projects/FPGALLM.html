@@ -32,6 +32,21 @@
                 thing though, because I'm unhappy enough about this to want to finish the 4-bit register matmul tonight and move on to the HBM one 
                 tomorrow.   
             </p>
+            <p> Later Night: Matmul seems to be working. This is the same minimal register based implementation that I had. Since I am no longer 
+                doing co-simulation, I figure I will spend the rest of the night figuring out how to get waveforms out of the simulation. 
+                To be honest, it is probably not going to be that hard to vibe-code something that allows me to visualise them. Anyway, 
+                I should confirm that the matmul stuff is working. Not because I need to test the module, I know it works, but becuase I want to 
+                make sure that I know the entire process of starting from a new project to getting something that runs. 
+            </p>
+            <p> Even Later Night: Register based matmul works. I am using OCL to load in the matrices one element at a time. Since the 
+                data bus size is 64 bits though I can load in 16 elements at a time. I'm not going to make this change though becuase
+                I will never actually use OCL to load in the matrices. I'm going to spend the first half of tomorrow on the waveforms, 
+                and then move on to HBM. I believe that HBM will be the hardest part of this because it also requires me to use PCIM/PCIS 
+                for loading data, and the HBM monitor IO. Once this is all in order, getting SmolLM to run is just putting everything 
+                together. Integration hell is real though so I don't want to get ahead of myself.
+                
+                P.S. I should start putting timestamps instead of putting evening, night, etc.
+            </p>
         </article>
 
         <article class="blog-post">
