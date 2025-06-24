@@ -18,6 +18,20 @@
                 But, spending this extra day was helpful because I might actually be able to get the co-simulation to work. But, if I don't 
                 I'm not putting any more time towards it right now. I'm going to move onto matmul tomorrow whether I can get it to work or not.
             </p>
+            <p> Evening: I'm having issues where some of the function calls are not placed in an SV scope, and that seems to be the
+                issue. The part that I am confused about, is I have exactly what they do. I've been using the dram_hbm_dma example they provide as ground truth to get co-simulation to work. I'm starting
+                to think that maybe the example they've provided is wrong. I should have probably run this before I started following it, 
+                but to be fair in their docs they've said that this is where one should look for co-simulation. So, I am going to start 
+                investigating whether or not their example work. If it doesn't, it might be easier to figure out why that doesn't work
+                than what I have.  
+            </p>
+            <p> Night: Okay. So, it turns out that the AWS example is wrong. Or at least I cannot get it to work. I'm almost cerrtain I am 
+                not doing anything wrong, but it's frustrating that this is why I won't be able to co-simulate. I'm just going to move on to 
+                matmuls, I can move on to it today so at least I got something out of this. I'm not entirely sure how to test the HBM and the DRAM
+                but I'll figure it out (assuming there are no mistakes in their examples for those). Dissapointment about the docs is not the worst
+                thing though, because I'm unhappy enough about this to want to finish the 4-bit register matmul tonight and move on to the HBM one 
+                tomorrow.   
+            </p>
         </article>
 
         <article class="blog-post">
