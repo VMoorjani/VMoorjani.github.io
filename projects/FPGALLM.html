@@ -12,6 +12,19 @@
 
         <article class="blog-post">
             <div class="date">June 23, 2025</div>
+            <p> Afternoon: I just wanted to wrap up the Int4 matmul stuff completely, so I've spent some more time on it today. The way it 
+                works right now is that there is a control register at 0x0, and then 0x4 onwards is matrix A, then matrix B's address
+                starts from wherever matrix A will end (since it is parameterised), and similarly there is matrix C. You can fill 
+                the registers (control or for each element) with the values you want using AXI transactions and OCL, and then you 
+                can signal to start computation using the control register. You can then poll one of the status bits to see if it's done, 
+                and read back the result from matrix C, once again using AXI transactions. Now I'm going to instantiate it in the top level,
+                and write a quick test bench to see if it works. If it does, I'll spend the rest of the day figuring out waveforms. 
+                It really sucks not being able to run the co-simulation yet because testing this in C would have been such a breeze. Oh well.
+            </p>
+        </article>
+
+        <article class="blog-post">
+            <div class="date">June 23, 2025</div>
             <p> I spent all day today working on matmul, and understanding how to use the HBM from the examples they've provided.
                 I also looked into why vivado isn't working, and why I can't get stuff to work with ForwardX11 on. I don't have 
                 much more clarity on this, but at least things are moving along on the actual hardware. I'm sure there will be something 
