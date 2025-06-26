@@ -11,7 +11,7 @@
         <h1>FPGA LLM</h1>
 
         <article class="blog-post">
-            <div class="date">June 23, 2025</div>
+            <div class="date">June 25, 2025</div>
             <p> Afternoon: I just wanted to wrap up the Int4 matmul stuff completely, so I've spent some more time on it today. The way it 
                 works right now is that there is a control register at 0x0, and then 0x4 onwards is matrix A, then matrix B's address
                 starts from wherever matrix A will end (since it is parameterised), and similarly there is matrix C. You can fill 
@@ -24,7 +24,7 @@
         </article>
 
         <article class="blog-post">
-            <div class="date">June 23, 2025</div>
+            <div class="date">June 24, 2025</div>
             <p> I spent all day today working on matmul, and understanding how to use the HBM from the examples they've provided.
                 I also looked into why vivado isn't working, and why I can't get stuff to work with ForwardX11 on. I don't have 
                 much more clarity on this, but at least things are moving along on the actual hardware. I'm sure there will be something 
