@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseball XM - Vishal Moorjani</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <main>
+        <h1>Baseball XM</h1>
+
+        <article class="blog-post">
+            <div class="date">June 26, 2025</div>
+            <p> I've recently gotten into watching baseball. I also have a friend who bets on baseball, so when I watch 
+                games with him I keep up with the lines. I've found that baseball is one of the most unpredictable sports, 
+                and being a faourite going into a game doesn't feel like it means as much as it does in other sports.
+                I think the problem is that I haven't seen enough baseball to be able to make a good judgement on how 
+                accurate the lines are. So, I figured it might be interesting to train a model that can figure out 
+                the lines. There are 3 things, money line, run line, and the spread. So, I want to train a model that 
+                can predict all 3. I'm going to train a model that will be able to predict the score in any inning. 
+                I also want to be able to feed it live data, and have it tune its predictions as the game goes on. I think 
+                that autoregressive generation will work for this. Imagine I am making a prediction for Team A vs Team B. 
+                Simply giving the model the previous matchups is not enough because it doesn't speak to recent performance. 
+                Including recent performance of only these 2 teams, even how they've done against other teams, is also
+                not enough because it doesn't include all the information about how good their oponents actually were (
+                imagine Team A beat Team C 3-0 but Team C has lost to all other teams 7-0 then the model should know this).
+                So, I need a model that allows the predicition for the current game to be informed by all previous games 
+                (self-attention), where the model has information about all previous games (pre-training), with a special 
+                focus on the most recent games (context window). So, I'm going to use a transformer model. Based on how 
+                it looks in my head right now, I'm going to start with a decoder only model, but I might move to an 
+                encoder-decoder model. It's called Baseball XM because I don't know how many parameters it will have.
+                I want it to be big though, because Malhar tells me that pre-training is a whole different ball game (pun intended).
+                I could also finetune a model for prediciton, and use its base understanding of english along with whatever 
+                baseball related data it was trained on. I'm not sure which is better, but I'm going to start with a decoder only model. 
+                And probably a small one. Then I'll go from there. I won't start work on this until I'm done with FPGALLM, but I 
+                just wanted to write this down so I know that I have to get to it as soon as I'm done with FPGALLM.
+            </p>
+        </article>
+
+    </main>
+</body>
+</html> 

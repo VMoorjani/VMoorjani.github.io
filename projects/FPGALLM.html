@@ -11,8 +11,16 @@
         <h1>FPGA LLM</h1>
 
         <article class="blog-post">
+            <div class="date">June 26, 2025</div>
+            <p> Afternoon: I've been thinking about this waveforms stuff wrong. My issue was that I couldn't get x11 to work, so I 
+                couldn't get any GUIs to work. But, I don't need to use x11. I can just download the vcd file, and then see it 
+                on my compter. So I'm just using GTKWave to open the file and I can see all the signals I need. 
+            </p>
+        </article>
+
+        <article class="blog-post">
             <div class="date">June 25, 2025</div>
-            <p> Afternoon: I just wanted to wrap up the Int4 matmul stuff completely, so I've spent some more time on it today. The way it 
+            <p> I just wanted to wrap up the Int4 matmul stuff completely, so I've spent some more time on it today. The way it 
                 works right now is that there is a control register at 0x0, and then 0x4 onwards is matrix A, then matrix B's address
                 starts from wherever matrix A will end (since it is parameterised), and similarly there is matrix C. You can fill 
                 the registers (control or for each element) with the values you want using AXI transactions and OCL, and then you 
