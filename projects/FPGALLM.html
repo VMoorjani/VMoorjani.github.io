@@ -19,6 +19,14 @@
                 Also, while going though the docs I found that they have an hdk/sdk project. I'm not sure if I can use this to 
                 write the host code. If I can, then it's not a big deal that I can't co-simulate. Should spend time on this.
             </p>
+            <p> Night: I'm actually quite silly. So, VCD files can't store unpacked arrays, which the matrices are. So, 
+                they weren't showing up in the waveform. I spent too long trying to figure out the right way to structure 
+                my tcl file before realising this. Now, I have Vivado on my computer. So, I don't need to work with 
+                VCD files. So, the same way I download the VCD file, I can just download the WDB file which stores 
+                everything, unpacked arrays and all, and just use XSIM on my computer to view it like I normally would. 
+                Dissapointing that I didn't think of this earlier. I'll spend the rest of tonight figuring out 
+                how to write host code. 
+            </p>
         </article>
 
         <article class="blog-post">
