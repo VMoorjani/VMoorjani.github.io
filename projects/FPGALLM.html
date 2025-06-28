@@ -20,6 +20,18 @@
                 probably 4D multiplications. I also want to figure out how to have ROM so that I can precompute and load positional embeddings. I don't know if 
                 SmolLM uses ROPE, but if they do that will be fun to figure out. Anyway, time to get to work.  
             </p>
+            <p>Later Night: I think I'm able to run co-simulation? It doesn't finish running, it hangs somewhere and I'm not sure why? 
+                Initially I thought it was because I was polling the wrong thing, but that doesn't seem to be the issue. To be fair, 
+                this is much further than I have come with co-simulation before. There were a bunch of issues with how I was doing it 
+                previously, including but no limited to the imports, the functions I was using, and the directory structure. I also never 
+                actually called make on the C files. I'm going to let this be for now because honestly I'm excited to get 4D matmuls to work, 
+                because then I'm not very far from having a significant portion of the LLM stuff running on the FPGA. I'm going to spend the 
+                rest of tonight on seeing how many different combinations of matmuls there are. I want to do this to see if I should have 
+                1 matmul module that can perform multipliations on matrices with an arbitarry number of elements in each dimension, or I should 
+                have a module for each combination of elements in each dimension. I think some combination of these is the way to go, but it 
+                depends on how mny combinations there are. I am leaning towards more flexible multipliers so this can scale to something beyond 
+                SmolLM. 
+            </p>
         </article>
 
         <article class="blog-post">
