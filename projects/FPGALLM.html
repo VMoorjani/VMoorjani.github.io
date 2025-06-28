@@ -35,7 +35,22 @@
             <p>Even Later Night: I'm abandoning the co-simulation stuff. I loaded in SmolLM, turns out it just uses Llama. They've brought
                 the size down from the regular llama models by having a smaller hidden size, less layers and a smaller vocab size. 
                 All not good for a sota model (allthough this is apparently sota for its size) but good enough for it to be the first 
-                model I put on an FPGA. Time to track down all the dimensions for any matmul they do. 
+                model I put on an FPGA. Time to track down all the matrix operations that are performed, and the dimensions for any matmul. 
+                From what I remember and can gauge from the architecture, each decoder layer will do 
+                [bsz, seq_len, hidden_size] x [hidden_size, hidden_size] => [bsz, seq_len, hidden_size].
+                It will also perform [bsz, seq_len, hidden_dim] x [hidden_dim, head_dim] => [bsz, seq_len, head_dim] because they use 
+                GQA. Then there will also be the embedding layer, which honestly might be better for me to put into ROM of some kind? 
+                I'm not sure how to handle that atm. 
+                Anyway to perform attention I'll have to perform a [bsz, num_heads, seq_len, head_dim] x [bsz, num_heads, head_dim, seq_len] => [batch_size, num_heads, seq_len, seq_len]
+                And I also need to perform a transpose operation. Basically, I need to handle 3D and 4D multiplications. I think my plan at the moment 
+                is to have 1 4D multiplier, and 3 3D multipliers. Let's say that I can put the embeddings into something that is look-up table esque. 
+                Then, each decoder layer needs to convert the input hidden states into queries, keys, and values. This can be done simultaneuously. 
+                So, 3 3D multipliers. Then K^T, so need to do transpose somehow. Then QK^T, so 4D. Then *V (yes yes I ignored softmax and /sqrt(d_k)), 
+                another 4D. Both can share the same 4D multiplier. I know I've glossed over the positional embeddings, and softmax. 
+                I also know that sin and cos to some max_tokens can be precomputed and stored in ROM of some kind. So, I'm ignoring 
+                that for the moment. I'm sure there is a good way to do softmax on the FPGA. I just don't know what it is. 
+                I think the move now is implement a 3D multiplier module, and a 4D multiplier module. From there, create a register 
+                based decoder layer to test all the multiplications. HBM will have to wait. 
             </p>
         </article>
 
