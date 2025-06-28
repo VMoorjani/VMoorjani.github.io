@@ -50,7 +50,7 @@
                 I also know that sin and cos to some max_tokens can be precomputed and stored in ROM of some kind. So, I'm ignoring 
                 that for the moment. I'm sure there is a good way to do softmax on the FPGA. I just don't know what it is. 
                 I think the move now is implement a 3D multiplier module, and a 4D multiplier module. From there, create a register 
-                based decoder layer to test all the multiplications. HBM will have to wait. 
+                based SDPA module to test all the multiplications. HBM will have to wait. 
             </p>
         </article>
 
