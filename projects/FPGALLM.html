@@ -32,6 +32,11 @@
                 depends on how mny combinations there are. I am leaning towards more flexible multipliers so this can scale to something beyond 
                 SmolLM. 
             </p>
+            <p>Even Later Night: I'm abandoning the co-simulation stuff. I loaded in SmolLM, turns out it just uses Llama. They've brought
+                the size down from the regular llama models by having a smaller hidden size, less layers and a smaller vocab size. 
+                All not good for a sota model (allthough this is apparently sota for its size) but good enough for it to be the first 
+                model I put on an FPGA. Time to track down all the dimensions for any matmul they do. 
+            </p>
         </article>
 
         <article class="blog-post">
