@@ -11,6 +11,18 @@
         <h1>FPGA LLM</h1>
 
         <article class="blog-post">
+            <div class="date">June 27, 2025</div>
+            <p>Night: I haven't had the chance to do much today, but I've just spent the whole day thinking about the sdk stuff. So, I have the rest of the night 
+                carved out for this. But, after my experience with the co-simulation stuff, I don't think I should spend more time than just tonight on it. 
+                I can finish the LLM stuff soon, and if I can simulate it even with just hardware, that's a good place to be. So, tonight I'm actually going to 
+                start by testing their HDK/SDK project. If it works, then I will spend more time tonight on it. If not, I'm going to load SmolLM into a notebook
+                to see exactly what multiplications they perform. I also realised that I won't just be doing 2D multiplications. I will be doing at least 3D, and
+                probably 4D multiplications. I also want to figure out how to have ROM so that I can precompute and load positional embeddings. I don't know if 
+                SmolLM uses ROPE, but if they do that will be fun to figure out. Anyway, time to get to work.  
+            </p>
+        </article>
+
+        <article class="blog-post">
             <div class="date">June 26, 2025</div>
             <p> Afternoon: I've been thinking about this waveforms stuff wrong. My issue was that I couldn't get x11 to work, so I 
                 couldn't get any GUIs to work. But, I don't need to use x11. I can just download the vcd file, and then see it 
