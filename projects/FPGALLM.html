@@ -11,6 +11,18 @@
         <h1>FPGA LLM</h1>
 
         <article class="blog-post">
+            <div class="date">June 28, 2025</div>
+            <p> Afternoon: Okay so because of SPMD more batch dimensions add minimal overhead for GPUs. However, here that isn't the case. Fortunately, I don't really want to 
+                do multiple batches right now. For the 3D multiplications, like the bsz, seq_len, hidden_dim ones, the bsz will only be 1 for me (at the moment). So, that's a 2D 
+                multiplication. I just need to make a 3D multiplier module for the 4D multiplications, cause the batch size will be 1, but the num_heads which is also a batch dimension
+                won't be 1. So that is what I am working on right now. Once I have that, I'm going to make a module that will perform transpose. Then, I'll make a module that can scale a matrix. 
+                I should now have all the components to perform SDPA except for the softmax. Time to do the 3D matmul stuff. Honestly, just for clarity and debugging I might make a 4D multiplier module. 
+                Both 3D and 4D are basically just looped 2D multiplications. Since bsz is 1 anyway, there is no loop, so no overhead? But it probably also makes it easier to track down errors in the shapes. 
+                Let's see.
+            </p>
+        </article>
+
+        <article class="blog-post">
             <div class="date">June 27, 2025</div>
             <p>Night: I haven't had the chance to do much today, but I've just spent the whole day thinking about the sdk stuff. So, I have the rest of the night 
                 carved out for this. But, after my experience with the co-simulation stuff, I don't think I should spend more time than just tonight on it. 
@@ -37,11 +49,9 @@
                 All not good for a sota model (allthough this is apparently sota for its size) but good enough for it to be the first 
                 model I put on an FPGA. Time to track down all the matrix operations that are performed, and the dimensions for any matmul. 
                 From what I remember and can gauge from the architecture, each decoder layer will do 
-                [bsz, seq_len, hidden_size] x [hidden_size, hidden_size] => [bsz, seq_len, hidden_size].
-                It will also perform [bsz, seq_len, hidden_dim] x [hidden_dim, head_dim] => [bsz, seq_len, head_dim] because they use 
-                GQA. Then there will also be the embedding layer, which honestly might be better for me to put into ROM of some kind? 
-                I'm not sure how to handle that atm. 
-                Anyway to perform attention I'll have to perform a [bsz, num_heads, seq_len, head_dim] x [bsz, num_heads, head_dim, seq_len] => [batch_size, num_heads, seq_len, seq_len]
+                [bsz, seq_len, hidden_dim] x [hidden_dim, num_heads * head_dim] => [bsz, seq_len, num_heads * head_dim] because they use GQA.
+                Then there will also be the embedding layer, which honestly might be better for me to put into ROM of some kind? I'm not sure how to handle that atm. 
+                Anyway to perform attention I'll have to perform a [bsz, num_heads, seq_len, head_dim] x [bsz, num_heads, head_dim, seq_len] => [bsz, num_heads, seq_len, seq_len]
                 And I also need to perform a transpose operation. Basically, I need to handle 3D and 4D multiplications. I think my plan at the moment 
                 is to have 1 4D multiplier, and 3 3D multipliers. Let's say that I can put the embeddings into something that is look-up table esque. 
                 Then, each decoder layer needs to convert the input hidden states into queries, keys, and values. This can be done simultaneuously. 
