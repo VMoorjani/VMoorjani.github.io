@@ -11,6 +11,19 @@
         <h1>FPGA LLM</h1>
 
         <article class="blog-post">
+            <div class="date">June 29, 2025</div>
+            <p> Afternoon: Okay. So, I was right...it's not as simple as saying hey here is a 4 bit matrix of weights that you use instead. In fact, quantization is only for storing the weights, not for performing 
+                the operations. The weights are all stored in INT4 (or INT8) along with some other data like a scaling factor and a zero point and then the weights are converted back to BF16 or whatever
+                before any operations are performed. For something as small as SmolLM I am not memory constrained, so quantizing the weights for memory efficincy was never the goal. The problem is that 
+                I FPGAs are bad at floating point operations. So, quantized weights are no good if if I have to perform flops. But, one can peform quantization aware finetuning, so that the entire pipeline, 
+                operations and all, are done in int quantization. So, after I finish the embeddings I'm going to do that today. Probably as a different project because it feels big enough to be one. I don't want 
+                some incredible sota model, I just want something that generates coherent text. Also, since its a 135M parameter model I can just do this in colab, which is cool cause I think I have some credits 
+                that I wasn't sure what I was going to use it fo now that I do all my other work on RunPod. Since I'm doing this, I think I'm just going to do INT8. The HBM has enough space, so I might as well. 
+                I'll have to rework the matmul modules, but I'll cross that bridge when I get to it. Embeddings now, INT8 quantization aware finetuning after. 
+            </p>
+        </article>
+
+        <article class="blog-post">
             <div class="date">June 28, 2025</div>
             <p> Afternoon: Okay so because of SPMD more batch dimensions add minimal overhead for GPUs. However, here that isn't the case. Fortunately, I don't really want to 
                 do multiple batches right now. For the 3D multiplications, like the bsz, seq_len, hidden_dim ones, the bsz will only be 1 for me (at the moment). So, that's a 2D 
