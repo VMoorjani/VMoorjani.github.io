@@ -18,7 +18,30 @@
                 won't be 1. So that is what I am working on right now. Once I have that, I'm going to make a module that will perform transpose. Then, I'll make a module that can scale a matrix. 
                 I should now have all the components to perform SDPA except for the softmax. Time to do the 3D matmul stuff. Honestly, just for clarity and debugging I might make a 4D multiplier module. 
                 Both 3D and 4D are basically just looped 2D multiplications. Since bsz is 1 anyway, there is no loop, so no overhead? But it probably also makes it easier to track down errors in the shapes. 
-                Let's see.
+                Let's see. I know that people probably don't do this stuff using loops, but I will parallelize and optimize later. I just want something that works for now. 
+            </p>
+            <p> Night: I think I've been thinking about this wrong. I'm implemented the 3D multiplier, and I also made a top-level wrapper 
+                which has a 2D multiplier and a 3D multiplier. For starters, if I'm hardware constrained I just need 1 4D multiplier. Dimensions 
+                0 and 1 can be 1 to make it 2D/3D. Now, because all of this is hardware, I would need to declare the maximum dimensions for a module. So, I need to handle matmuls of abitary sizes. 
+                Certain dimensions, like the batch dimension can be fixed (paametized because good code you know), but other dimensions should be arbitary. Maybe I should make a matrix module, where 
+                it stores the number of rows and columns and the data. For now it will have registers, but later it can store the start/end addresses in HBM. I'm not sure about this, but I feel like there 
+                is a better way to stucture this than what I have right now. The good news is I have something that can perform 3D multiplication. I'll also make a 4D multiplication module because I think 
+                I'm going to keep the batch size dimension, even if it is always 1. 
+            </p>
+            <p> Later Night: I think I'm going to start with just putting SmolLM on the FPGA. I wanted to get comfortable with F2 development, and I think I am comfortable enough. I am also excited to 
+                work with the HBM, which is probably why I decided to go in this direction. I already spent some time understanding how the HBM works, so I'm going to start with the embedding matrix. 
+                I figure this is a good place to start because 1. it is the first thing that happens, 2. it's just a look up table. How hard can it be? So, embeddings tonight, then I'll worry about other stuff 
+                tomorrow.   
+            </p>
+            <p> Even Later Night: I lost track of time, and it is not 4 AM. But, I was able to get the base test running with a lot of the HBM modules copied over and instantiated. I am now trying to figure out 
+                which wrapper is the best to use fo the HBM stuff. Basically, they have the direct memory access example which has a wrapper that allows you to read back 32 bits at a time. Which is fine, 
+                and since I am not too focused on optimizations, its okay for now. However, the memory peformance example where they try to get as close as possible to that yummy 460 GB/s from the HBM has a wrapper
+                that allows me to actually use bursts. Since my embeddings are 576 dimensional and each dimension is 4 bits, each embedding is 288 bytes. Each beat is 64 bytes, so I can read the embeddings for a token 
+                back in bursts of 5 beats. This means that the mem_perf one is probably the way to go. I know I'm not focusing on optimizations, but if it is a simple question of which files to copy, I should 
+                copy the one that is better right? I'll go through both of them tonight just to be sure. Tomorrow I should have the embeddings working. That's step 1 of getting SmolLM to work. It's also time to
+                figure out how exactly quantization works. I knew it wasn't as simple as saying hey use this 4 bit integer matrix instead of this other one, but I don't know what exactly the changes are beyond this. 
+                
+                P.S. the R key on my keyboard is broken, and I really need to press down on it to get it to work. It slows me down like crazy. I should buy a new keyboard. 
             </p>
         </article>
 
