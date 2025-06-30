@@ -12,9 +12,20 @@
 
         <article class="blog-post">
             <div class="date">June 30, 2025</div>
-            <p> I thought I'd get much further than I did yesteday. I'm still working on HBM. Also, there are some great resouces from Nvidia and Pytorch on how to do quantization aware training. After a cursory 
+            <p> Afternoon: I thought I'd get much further than I did yesteday. I'm still working on HBM. Also, there are some great resouces from Nvidia and Pytorch on how to do quantization aware training. After a cursory 
                 reading of both, I think this will be the easiest part of this project. Also, turns out there is a SmolLM2-135M that is out, so I think I'll use that. Anyway, back to figuring out which signals are 
                 not connected corectly for the HBM. 
+            </p>
+            <p> Later but still afternoon: This is just insane. So, it turns out that XSIM has a bunch of timing issues. To deal with these timing issues, AWS 
+                adds a 200ps delay to each AXI signal. That is not the problem. The problem is that there is some other bug in XSIM, that slows it down 
+                like crazy when using HBM. I know this, because intializing the HBM can take upto 50000ns as per the test they provide. However, simulating 
+                5000ns takes me 2 minutes. That means that any test I want to run will take 3 hours to even start. That's just insane. So, I tried a bunch of things. 
+                I first tried to track none of the signals, I figured less signals to track would mean less things to measure and lead to a speed up. That didn't help,
+                if it did it didn't help much. Then, I tried to turn debug mode off for XSIM, which should also help it go faster. That didn't help much either. 
+                I mean both these changes help me come down from 2 minutes per iteration to 1 min 20 seconds. Helpful, but I still have to wake like 2 hours 
+                before a test even starts running. I then decided to see how far I was pushing my CPU, to decide whether I should go from a c5.4xlarge isntance 
+                that I am using to something bigger. Turns out, I am only using 1 of my cores. So, I think I have changed it so that it uses 4 of the available 
+                cores now. I've just started another run, and it'll take a while to even see if this is helpful, but I am just hoping and praying. 
             </p>
         </article>
 
