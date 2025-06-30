@@ -11,6 +11,14 @@
         <h1>FPGA LLM</h1>
 
         <article class="blog-post">
+            <div class="date">June 30, 2025</div>
+            <p> I thought I'd get much further than I did yesteday. I'm still working on HBM. Also, there are some great resouces from Nvidia and Pytorch on how to do quantization aware training. After a cursory 
+                reading of both, I think this will be the easiest part of this project. Also, turns out there is a SmolLM2-135M that is out, so I think I'll use that. Anyway, back to figuring out which signals are 
+                not connected corectly for the HBM. 
+            </p>
+        </article>
+
+        <article class="blog-post">
             <div class="date">June 29, 2025</div>
             <p> Afternoon: Okay. So, I was right...it's not as simple as saying hey here is a 4 bit matrix of weights that you use instead. In fact, quantization is only for storing the weights, not for performing 
                 the operations. The weights are all stored in INT4 (or INT8) along with some other data like a scaling factor and a zero point and then the weights are converted back to BF16 or whatever
@@ -20,6 +28,14 @@
                 some incredible sota model, I just want something that generates coherent text. Also, since its a 135M parameter model I can just do this in colab, which is cool cause I think I have some credits 
                 that I wasn't sure what I was going to use it fo now that I do all my other work on RunPod. Since I'm doing this, I think I'm just going to do INT8. The HBM has enough space, so I might as well. 
                 I'll have to rework the matmul modules, but I'll cross that bridge when I get to it. Embeddings now, INT8 quantization aware finetuning after. 
+            </p>
+            <p> Later but still afternoon: This is the hardest thing I've worked on. Like other things were hard, but I wasn't going into any of them as blind as I am with this. I love it. Anyway, I 
+                had to create my own wrapper, which I did. I also had to add in something called a crossbar. Basically, the hsot would use the PCIS interface to interact with the HBM. However, the way 
+                it has been set up is that the host can also write to DDR (which I don't have), and it depends on the address they write to. The AWS folks were kind enough to provide a crossbar which 
+                routes the data to/from the correct place. Instantiating this was a pain, but I got it to work. I think. I also made a module that will just go through the HBM reading back data. Now, 
+                I am going to write a test case. This will write a bunch of data to the HBM, and then it will use the module to go through the HBM and read back the data. If it works, that means I can 
+                set up the HBM with all the parameters, and I can read back the weights etc from my custom logic as I need them. I am really hoping this works first try because if it doesn't I'm in for 
+                a world of pain.  
             </p>
         </article>
 
