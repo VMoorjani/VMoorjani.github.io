@@ -9,6 +9,27 @@
 <body>
     <main>
         <h1>FPGA LLM</h1>
+        <article class="blog-post">
+            <div class="date">July 1, 2025</div>
+            <p> Afternoon: I'm not going to lie, I didn't think this would take me more than a month. But, here we are. The AXI memory test ran, which is a start,
+                but I forgot to set the HBM status registers. So, the testbench that polls that register never got past the AXI setup. It is much, much faster though.
+                In fact the only reason it isn't instant is because of the delay in the polling loop which is supposed to be for the HBM. I spent some time thinking
+                about it last night, and I think the AXI RAM is the way to go about this. It basically works the same way as the HBM does, it is just a lot 
+                faster to simulate. The rest of the CL interfaces with it the same way it would the HBM though. So, if I get the whole thing to work with the 
+                AXI module, it should (in theory) work with the HBM. Obviously the AXI module is like one cycle reads which the HBM does not have, but I won't 
+                use it to actually time the thing. The other issue is that this doesn't scale. So I'm going to start with AXI RAM, finish the whole LLM, and then 
+                move on to HBM. If HBM doesn't work, I am hoping that DDR doesn't have the same timing issues with XSIM. Then I'll just use that. To be fair, 
+                I'm fairly certain that the CL interfaces with DDR the same way it would with HBM, and the host code uses PCIS for it anyway. Hmm...might be worth 
+                using DDR from now. Anyway, I'll finish the AXI RAM right now and spend some time looking at the DDR. Once the AXI RAM is done, I can get to 
+                work on QAT which sounds like fun. 
+            </p>
+            <p> Evening: So I tried to test the HBM stuff on their examples. I know now that some of the stuff they have is wrong, but I just wanted to see if it ran since 
+                that is the problem I was having. It doesn't. Which is a good thing, because that means the likelihood that I have done something wrong is not 100%? (Honestly 
+                this is not really a good thing). Anyway, while trying to figure out why my AXI RAM wasn't working either, I left the DDR test on the dram_hbm module the have
+                running. It seems to work. So, I think I'm going to eventually use DDR. Sucks that I can't use HBM, but oh well. For now, I'm going to use the simple BRAM IP 
+                that they have included. I'll implement DDR later. Hopefully things should start moving along quicker now. 
+            </p>
+        </article>
 
         <article class="blog-post">
             <div class="date">June 30, 2025</div>
@@ -16,7 +37,7 @@
                 reading of both, I think this will be the easiest part of this project. Also, turns out there is a SmolLM2-135M that is out, so I think I'll use that. Anyway, back to figuring out which signals are 
                 not connected corectly for the HBM. 
             </p>
-            <p> Later but still afternoon: This is just insane. So, it turns out that XSIM has a bunch of timing issues. To deal with these timing issues, AWS 
+            <p> Later But Still Afternoon: This is just insane. So, it turns out that XSIM has a bunch of timing issues. To deal with these timing issues, AWS 
                 adds a 200ps delay to each AXI signal. That is not the problem. The problem is that there is some other bug in XSIM, that slows it down 
                 like crazy when using HBM. I know this, because intializing the HBM can take upto 50000ns as per the test they provide. However, simulating 
                 5000ns takes me 2 minutes. That means that any test I want to run will take 3 hours to even start. That's just insane. So, I tried a bunch of things. 
@@ -65,7 +86,7 @@
                 that I wasn't sure what I was going to use it fo now that I do all my other work on RunPod. Since I'm doing this, I think I'm just going to do INT8. The HBM has enough space, so I might as well. 
                 I'll have to rework the matmul modules, but I'll cross that bridge when I get to it. Embeddings now, INT8 quantization aware finetuning after. 
             </p>
-            <p> Later but still afternoon: This is the hardest thing I've worked on. Like other things were hard, but I wasn't going into any of them as blind as I am with this. I love it. Anyway, I 
+            <p> Later But Still Afternoon: This is the hardest thing I've worked on. Like other things were hard, but I wasn't going into any of them as blind as I am with this. I love it. Anyway, I 
                 had to create my own wrapper, which I did. I also had to add in something called a crossbar. Basically, the hsot would use the PCIS interface to interact with the HBM. However, the way 
                 it has been set up is that the host can also write to DDR (which I don't have), and it depends on the address they write to. The AWS folks were kind enough to provide a crossbar which 
                 routes the data to/from the correct place. Instantiating this was a pain, but I got it to work. I think. I also made a module that will just go through the HBM reading back data. Now, 
@@ -395,5 +416,14 @@
         </article>
 
     </main>
+    <script>
+        // Automatically bold time-of-day labels like "Afternoon:", "Evening:" etc.
+        document.addEventListener("DOMContentLoaded", () => {
+            const timeRegex = /\b(Morning|Afternoon|Evening|Night|Later Night|Even Later Night|Later But Still Afternoon):/gi;
+            document.querySelectorAll('.blog-post p').forEach(p => {
+                p.innerHTML = p.innerHTML.replace(timeRegex, '<strong>$1:</strong>');
+            });
+        });
+    </script>
 </body>
 </html> 
