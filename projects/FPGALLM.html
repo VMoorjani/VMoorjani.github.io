@@ -26,6 +26,21 @@
                 before a test even starts running. I then decided to see how far I was pushing my CPU, to decide whether I should go from a c5.4xlarge isntance 
                 that I am using to something bigger. Turns out, I am only using 1 of my cores. So, I think I have changed it so that it uses 4 of the available 
                 cores now. I've just started another run, and it'll take a while to even see if this is helpful, but I am just hoping and praying. 
+
+                Update: The core count was not the problem. It was a problem, but it doesn't help. It doesn't help because you are constantly polling the HBM 
+                registers to see if it has initialized. Between polling, you are simply adding a delay. So, you need to calculate all these signals, for 
+                each clock cycle and there are just so many of them between the HBM IP and the shell. Turns out this is a known bug with XSIM that AWS have 
+                mentioned. They also said you can fix it by using Questa or VCS. I don't have access to either, and they apparently cost a lot of money to use. 
+                I'm stuck with XSIM for now. Yay! 
+            </p>
+            <p>
+                Evening: It doesn't work. It seems like there is just nothing I can do. The HBM IP has some constants, like the time it takes to check 
+                the temperature, the time it takes to check some other infomation etc. They are all on the order of mili/microseconds. The problem is that 
+                it takes a long time to simulate even microseconds. Now, the AWS team has astutely noted that in simulation you can decrease those numbers 
+                by like 10000x (I'm not even kidding). So, I did that. It didn't help. The only real hope I have of getting this to work with HBM is that 
+                I have changed those constants incorrectly. Fortunately this is a very real possibility because I'm passing them as arguments into my make 
+                command (which I believe you can do) because I wanted to avoid having to recompile the HBM IP. I'm going to change it directly in the HBM IP 
+                and hope that speeds things up. If it does then well and good, if it doesn't then boy am I am in a pickle. 
             </p>
         </article>
 
