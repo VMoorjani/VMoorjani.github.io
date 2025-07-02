@@ -12,7 +12,7 @@
 
         <article class="blog-post">
             <div class="date">June 30, 2025</div>
-            <p> Night: It's 3 AM here in champaign, and I've finally made it far enough into FPGALLM to start working on QAT. I remember reading Character AI's post about how
+            <p> Night: It's 3 AM here in champaign, and I've finally made it far enough into FPGALLM to start working on QAT. I remember reading Character AI's post that malhar sent about how
                 they serve all their users. They wrote about how they natively train in int8. They still do some dequantization because they aren't compute bound, but their 
                 requirements from their models were very differnet from my own, they actually needed their models to be good. I don't really need that for FPGALLM, 
                 but hey I get to learn about quantization and let's be honest, it's so much cooler to have real weights. So the reason this is it's own mini-project is 
@@ -21,6 +21,16 @@
                 It seems like it should be fairly straightforward but I don't want to make the mistake of getting ahead of myself again. 
                 I also haven't worked on colab for a while, so I'm excited to see what they've done with their Gemini integration. 
                 The goal is to create a version of SmolLM2-135M that requires no flops. 
+            </p>
+
+            <p>
+                Later In The Night: It is now almost 4. I was running the data generation script, which is taking quite long because it has to download, clean, and save 
+                5 million examples. I forgot to connect to Google Drive before getting half way through, so when I disconnected to connect to a GPU runtime I would have lost 
+                all my progress. So I had to restart. Not the best start to this honestly. Anyway, it's saving the dataset to my drive now. Also, I'm not sure if I'm doing something wrong, 
+                or Gemini integration is just not finished for Colab yet, because it can't seem to access files in the runtime? Like I asked it to look at the dataset generation script 
+                for something, and it said it can't access it. Not sure what's going on there, but hey it's a start. I think I'm going to stop running the dataset generation 
+                will before the 5 million samples anyway. I don't want great performance, and I also don't need really long sequences of text because I don't want to have to 
+                start off by dealing with such large matmuls anway. It's at 500K right now, I'll let it get to a million and then stop probably. I can always add more later if I need them.
             </p>
         </article>
     </main>
