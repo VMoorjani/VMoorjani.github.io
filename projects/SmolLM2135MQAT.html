@@ -11,7 +11,40 @@
         <h1>SmolLM2-135M QAT</h1>
 
         <article class="blog-post">
-            <div class="date">June 30, 2025</div>
+            <div class="date">July 2, 2025</div>
+            <p>
+                Morning: So, it turns out that the dataset never got saved to my drive. I left the generation script running overnight, and though I could see the file 
+                on colab, it never got saved to my drive. So, I've just been trying to figure out what went wrong all morning. I've run it a few times after that, 
+                and it got up to 100K samples and still got saved. While the script is running I don't see anything in my drive, but I do see it in colab. After interrupting 
+                the script, it takes a little bit but it eventually shows up on Drive. After the stuff finished executing last night I disconnected the runtim almost 
+                immediately. So, I am not sure if they store files temporarily while they are open on colab, and then persist them to drive only after, while the runtime 
+                is still running. I'll stop running once the current run gets to like 1M samples and start working on the INC stuff. I'll run a full 5M run while doing all 
+                of that. 
+            </p>
+            <p>
+                Afternoon: Okay I'm pretty sure my hunch was correct, and the reason it didn't get saved to my drive is because I disconnected the runtime immediately after 
+                the script was done running, and drive does not constantly persist to drive. It also turns out that the stuff I was looking at for INC was old. INC 2.0+ 
+                is much easier to use, no yaml files. Currently tokenizing the 1M dataset. It was taking really long so I restarted it with batching and num_proc = 11. 
+                It's going ~8x faster now, which will be especially helpful when I use the full 5M dataset.
+            </p>
+            <p>
+                Later In The Afternoon: So it turns out that INC doesn't support NVIDIA GPUs or TPUs. That means that this is not scalable at all. I do want to see what 
+                the output of this whole process looks like though to make sure that I am not msising anything. So, I am going to run INC QAT on the 1M dataset anyway. 
+                After that works, I'll move over to torchao. I've been thinking about maybe doing this from scratch. From what I understand, they basically wrap any 
+                floating point operation in a quantize + dequantize operation. You then perform the matmul and quantize + dequantize the result. The model learns weights 
+                that are more robust to quantization. At inference time, you quantize your weights and perform all the operations in int8. 
+            </p>
+            <p>
+                Evening: I ditched INC. Not having GPU support is insane, so I am now using torchao. This is also quite esay because I'm only running it on 1 GPU, I don't need 
+                much more because my model is only 135M parameters. But, I think I would like to set a loftier goal, and I would like to work with Llama 3.1-8B. Anyway, 
+                I'll work my way up to that through the SmolLM models. I've started with 135M, then I'll go to their 1.7B model and then Llama 3.1 8B. That should 
+                introduce a whole host of issues, so something to look forward to I guess. Anyway, this is running now, I'm waiting for it to finish the 1M dataset 
+                before I move onto the 5M one. I've been running this on an L4 while debugging everything. Time to move to an A100.
+            </p>
+        </article>
+
+        <article class="blog-post">
+            <div class="date">July 1, 2025</div>
             <p> Night: It's 3 AM here in champaign, and I've finally made it far enough into FPGALLM to start working on QAT. I remember reading Character AI's post that malhar sent about how
                 they serve all their users. They wrote about how they natively train in int8. They still do some dequantization because they aren't compute bound, but their 
                 requirements from their models were very differnet from my own, they actually needed their models to be good. I don't really need that for FPGALLM, 
