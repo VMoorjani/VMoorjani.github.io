@@ -29,6 +29,21 @@
                 running. It seems to work. So, I think I'm going to eventually use DDR. Sucks that I can't use HBM, but oh well. For now, I'm going to use the simple BRAM IP 
                 that they have included. I'll implement DDR later. Hopefully things should start moving along quicker now. 
             </p>
+            <p> Night: I wanted to move quickly, and I'm a little tired of staring at the outputs of running simulations. Associative arrays! I never knew they existed, 
+                but they are exactly what I was looking for. Simulation only (which is fine for me for now), only use up memory as they start getting filled up, and 
+                they are basically dictionaries (hashmaps if you are hardcore like that). I've decided to make my life very easy with this and just have all the slave ready 
+                signals be high all the time anyway. I just tested it using the PCIS tasks they give and it seems to work. I haven't set it up for CL access, which is the next step. 
+                That (hopefully) shouldn't take too long. This is really me taking the easy way out, but I want to get everything else working before spending hours just waiting 
+                for simulations to run. I think I'll get started on QAT today as well. After I finish the CL RAM access. 
+            </p>
+            <p> Later Night: Okay. So, I was getting some elaboration errors because I was trying to drive the RAM signals from PCIS as well as OCL. This was amongst the stupider
+                things I've done, but I got to thinking about how I had done this in 385. So, I changed the RAM module to be dual-port. One of them is driven by PCIS, the other by the 
+                ocl slave module. The OCL slave module reads and writes upto 1 word of the selected address. THe reason I did it like this is because I know my OCL stuff is correct. 
+                So most of this was just copy pasting from the register example for the OCL signals. It basically sits between OCL and RAM and I am using it as a placeholder for 
+                other CL that will access the RAM. Since I'm not really worried about PCIS writing to RAM at the same time as CL, I'm not doing anything special for it, just giving 
+                PCIS preference. I made the same test for OCL as I have for PCIS and it seems to work. So, not really the way I wanted to implement memory but I don't have much 
+                of a choice for the time being. Once I get everything else working, I'll figure out how to do DDR/HBM. It's 3 AM now, time to get to work on QAT.
+            </p>
         </article>
 
         <article class="blog-post">

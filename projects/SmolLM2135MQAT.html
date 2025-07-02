@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmolLM2-135M QAT - Vishal Moorjani</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <main>
+        <h1>SmolLM2-135M QAT</h1>
+
+        <article class="blog-post">
+            <div class="date">June 30, 2025</div>
+            <p> Night: It's 3 AM here in champaign, and I've finally made it far enough into FPGALLM to start working on QAT. I remember reading Character AI's post about how
+                they serve all their users. They wrote about how they natively train in int8. They still do some dequantization because they aren't compute bound, but their 
+                requirements from their models were very differnet from my own, they actually needed their models to be good. I don't really need that for FPGALLM, 
+                but hey I get to learn about quantization and let's be honest, it's so much cooler to have real weights. So the reason this is it's own mini-project is 
+                because I think it's cool and different enough to deserve it's own project, and FPGALLM doesn't need this at all actually. 
+                I've already got a script that will create a dataset for me.That's probably the easist part though. I read Nvidia and Pytorch's guides on QAT. 
+                It seems like it should be fairly straightforward but I don't want to make the mistake of getting ahead of myself again. 
+                I also haven't worked on colab for a while, so I'm excited to see what they've done with their Gemini integration. 
+                The goal is to create a version of SmolLM2-135M that requires no flops. 
+            </p>
+        </article>
+    </main>
+</body>
+</html> 
