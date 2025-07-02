@@ -22,7 +22,6 @@
                 I also haven't worked on colab for a while, so I'm excited to see what they've done with their Gemini integration. 
                 The goal is to create a version of SmolLM2-135M that requires no flops. 
             </p>
-
             <p>
                 Later In The Night: It is now almost 4. I was running the data generation script, which is taking quite long because it has to download, clean, and save 
                 5 million examples. I forgot to connect to Google Drive before getting half way through, so when I disconnected to connect to a GPU runtime I would have lost 
@@ -31,6 +30,15 @@
                 for something, and it said it can't access it. Not sure what's going on there, but hey it's a start. I think I'm going to stop running the dataset generation 
                 will before the 5 million samples anyway. I don't want great performance, and I also don't need really long sequences of text because I don't want to have to 
                 start off by dealing with such large matmuls anway. It's at 500K right now, I'll let it get to a million and then stop probably. I can always add more later if I need them.
+            </p>
+            <p>
+                Even Later In The Night: I think I've been going about this the wrong way. I'm excited about the FPGALLM stuff, which is why I want to get through this as 
+                quickly as possible, and I've been saying I don't need fantastic performance. But, the point of doing this whole thing was to get comofrtable with QAT. So, if anything,
+                I should work on getting the best performance out of the quantized model. I was thinking about this when the data gen script was running, so I'm letting it run all the way
+                . I will train on 5 million samples. While waiting for it to run, I was talking to ChatGPT about QAT. Turns out, Intel has this thing called neural_compressor, which allows you to 
+                perform QAT the model from a single yaml file. It does everything for you, including finding the optimal hyperparameters. 
+                I think I'm going to start with INC and see how it goes. Finally I'd want to do something a little more hands on, but let's see how this goes first. 
+                4:30 now, and about half way through data gen. Thank god for Google One. 
             </p>
         </article>
     </main>
