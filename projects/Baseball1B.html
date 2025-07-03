@@ -8,7 +8,23 @@
 </head>
 <body>
     <main>
-        <h1>Baseball XM</h1>
+        <h1>Baseball XB</h1>
+
+        <article class="blog-post">
+            <div class="date">July 3, 2025</div>
+            <p> I still haven't done anything for this, but I think I'm going to start with full finetuning instead of pre-training. The reason for this 
+                is that all these different companies like Fox, CBS, Yahoo etc. publish their predictions for the games. These predictions also 
+                include the odds etc. from different websites. More importantly, they include information about the teams, players, weather etc. 
+                Obviously, this information is useful, but for a model to properly digest all of it it would need a strong base understanding of 
+                english. So, I'm going to bank on the inate understanding of language one of the bigger models has, maybe Llama 3.1 8B or Qwen3 8B. 
+                I will finetune one of these models on data predicting the outcomes of games. This is a much bigger undertaking than what I had originally 
+                planned, because I need to aggregate all the predictions for all the games, along with the innings-by-innings results. I'm not really sure 
+                if all these companies keep all their past predictions. I want to do full finetuning instead of any kind of PEFT because it seems harder. 
+                I'll perform some kind of PEFT also, just to compare, and at some point I would like to perform pretraining. Once all of this is done, 
+                it'll be cool to have some kind of counter on this website that displays how much up or down the model is currently (like if it had bet 
+                100 dollars on each of it's predictions, then how much would it have won or lost so far).
+            </p>
+        </article>
 
         <article class="blog-post">
             <div class="date">June 30, 2025</div>
