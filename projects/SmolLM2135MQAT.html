@@ -13,13 +13,30 @@
         <article class="blog-post">
             <div class="date">July 5, 2025</div>
             <p>
-                I've started training my own model. I created custom int only classes for everything. I figured that this would be the easiest to actually implement on the FPGA because I'll be able to 
+                Afternoon: I've started training my own model. I created custom int only classes for everything. I figured that this would be the easiest to actually implement on the FPGA because I'll be able to 
                 walk through each step of the model, tracking things myself. I know that you can do this even with models loaded in with AutoModelForX but I kind of just wanted to do it myself. I'm 
                 following a similar strategy to what they do with AQT. I have straight through estimators which allow me to round the weights while still having them be differentiable. Training on the 5M
                 sample dataset. I'll see how many tokens it is at some point. Maybe around 50M? I'm currently training with only 2 layers (60M parameters)to make sure that everything is working. 
                 I'll step it up to 30 layers (~135M parameters?) as soon as this is done. I'm not expecting anything from the 2 layer model, but as long as the 30 layer one can generate coherent text I'll be happy. 
                 I've also restricted the context length to 256 because I don't want to go much further on the FPGA. If this does something cool I'll get into properly training a much bigger model with more data. 
                 Love paying for my own compute! Maybe I should use some AWS credits for this. 
+            </p>
+            <p>
+                Later in the afternoon: I realised I was saving the model every 1000 steps which will fill up my disk well before training is done. So, I had to stop it. I also realised that with a batch size 
+                of 32 this will take 8 hours to run on the A40. I'm going to run it on the colab A100 to see how much faster it's doing there. It is currently 4:23 PM here. it is at step 3000, train loss is 9.438.
+                5:10 PM now, 13.5K steps in and train loss is 9.26, so something is happening. Unfortunately, I realised that I am using SiLU, which obviously is not int friendly. I'll swap it out for ReLU. I'm not 
+                stopping this run though because I want to see how the model performs. It'll get saved after 20k steps so I'll see then. There is still a lot to do between now and full int deployment. Based on some 
+                quick math this run will take 10 hours. That's with only 2 layers. So, if I want to do this with 30 layers then that's a problem because quantization errors will snowball the deeper the model goes. 
+                However, I was thinking about ~100M parameter models and I remembered that the smallest GPT-2 was 117M parameters. The better part is that it is only 12 layers. It's vocab size is about the same, with 
+                a d model of 768. So, I'm going to use the GPT2 arcitecture to base this on, not SmolLM2. Basically what that means is I will use the GPT2 tokenizer, 12 layers, a learned position embedding matrix 
+                ('m actually already doing this because I couldn't get RoPE with just ints). I'm going to use ReLU instead of the Gelu that they use. GPT2 doesn't use GQA but I will, well because it's already implemented.
+                With a d_model of 768 I'm thinking head_dim of 64 (same as SmolLM actually), 12 query heads, 4 KV heads? Let's see. I'll put this together. I also think I'm going to bite the bullet and pay for an A100. 
+                I need this to go quicker. I've also done a lot of stuff to make my life slightly easier, like the scale for all the quantization stuff is 1/128 rather than a learnable parameter. Oh well.
+            </p>
+            <p>
+                Set up the GPT2 model. I started a training run, looks like it will take 5 hours (I've stepped up the batch size to 64). But, I decided to save the tokenized dataset instead of having to tokenize it 
+                every time, so that's running now. Then I'll start the training process and see how it goes. Hopefully, if this gets done by tonight (can generate text) I'll go back to the FPGA stuff and have that done in a 
+                week or so. I'll revisit this for sure. There is a lot of interesting stuff for me to explore here that I'm excited about. Anyway, better to focus on one thing at a time. 
             </p>
         </article>
 
