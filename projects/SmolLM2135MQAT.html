@@ -11,9 +11,22 @@
         <h1>SmolLM2-135M QAT</h1>
 
         <article class="blog-post">
+            <div class="date">July 5, 2025</div>
+            <p>
+                I've started training my own model. I created custom int only classes for everything. I figured that this would be the easiest to actually implement on the FPGA because I'll be able to 
+                walk through each step of the model, tracking things myself. I know that you can do this even with models loaded in with AutoModelForX but I kind of just wanted to do it myself. I'm 
+                following a similar strategy to what they do with AQT. I have straight through estimators which allow me to round the weights while still having them be differentiable. Training on the 5M
+                sample dataset. I'll see how many tokens it is at some point. Maybe around 50M? I'm currently training with only 2 layers (60M parameters)to make sure that everything is working. 
+                I'll step it up to 30 layers (~135M parameters?) as soon as this is done. I'm not expecting anything from the 2 layer model, but as long as the 30 layer one can generate coherent text I'll be happy. 
+                I've also restricted the context length to 256 because I don't want to go much further on the FPGA. If this does something cool I'll get into properly training a much bigger model with more data. 
+                Love paying for my own compute! Maybe I should use some AWS credits for this. 
+            </p>
+        </article>
+
+        <article class="blog-post">
             <div class="date">July 4, 2025</div>
             <p>
-               I moved over to RunPod. Colab is fine, but the A100s they have are only 40GB, so with 80GB I can have a bigger batch 
+               Evening: I moved over to RunPod. Colab is fine, but the A100s they have are only 40GB, so with 80GB I can have a bigger batch 
                size. Also, I don't keep losing temporary stuff on RunPod because I created a new nework volume. While creating the dataset, 
                I was thinking why am I writing every example? I could just do it in batches, and that will probably save me a bunch of time. 
                I was right. Writng in batches of 10K samples now and its like 2-3x faster. Once the 5M dataset is done I'll start AQT. 
@@ -22,9 +35,18 @@
                From this, they are able to implement everything. I could take a similar approach for FPGALLM, but I'll cross that bridge 
                when I come to it. I'm going to start with with the Llama example they have and explore that. The embeddings are not 
                quantized, but I believe they get quantized in the decoder layer. If that's true, I can just skip that and store 
-               the quanitzed one. I'm not sure if this is correct though. Let's see how this works. 
+               the quanitzed one. I'm not sure if this is correct though. Let's see how this works. Should I just train my own completely 
+               INT model? 
+            </p>
+            <p>
+                Night: Okay so I couldn't find any integer only language models that have no fixed point stuff going on either. I'm going 
+                to train one tonight. I want to see first hand why people don't do it. Before jumping into this I looked up some papers on 
+                int only training. They use activation functions that are approximations, and they use DFA instead of backprop. Will be 
+                interesting to see what's going on. 
             </p>
         </article>
+
+        <article class="blog-post">
             <div class="date">July 2, 2025</div>
             <p>
                 Morning: So, it turns out that the dataset never got saved to my drive. I left the generation script running overnight, and though I could see the file 
