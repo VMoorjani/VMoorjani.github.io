@@ -11,6 +11,20 @@
         <h1>SmolLM2-135M QAT</h1>
 
         <article class="blog-post">
+            <div class="date">July 4, 2025</div>
+            <p>
+               I moved over to RunPod. Colab is fine, but the A100s they have are only 40GB, so with 80GB I can have a bigger batch 
+               size. Also, I don't keep losing temporary stuff on RunPod because I created a new nework volume. While creating the dataset, 
+               I was thinking why am I writing every example? I could just do it in batches, and that will probably save me a bunch of time. 
+               I was right. Writng in batches of 10K samples now and its like 2-3x faster. Once the 5M dataset is done I'll start AQT. 
+               I'm using 4 bit weights with 8 bit activations because that is the example they showed on their website. I'll see where to 
+               go from there. Also, I was reading the tinygrad docs. They implement 3 kinds of operations, ElementWise, Reduce, and Movement. 
+               From this, they are able to implement everything. I could take a similar approach for FPGALLM, but I'll cross that bridge 
+               when I come to it. I'm going to start with with the Llama example they have and explore that. The embeddings are not 
+               quantized, but I believe they get quantized in the decoder layer. If that's true, I can just skip that and store 
+               the quanitzed one. I'm not sure if this is correct though. Let's see how this works. 
+            </p>
+        </article>
             <div class="date">July 2, 2025</div>
             <p>
                 Morning: So, it turns out that the dataset never got saved to my drive. I left the generation script running overnight, and though I could see the file 
