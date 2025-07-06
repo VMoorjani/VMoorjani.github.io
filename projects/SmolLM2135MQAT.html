@@ -11,6 +11,30 @@
         <h1>SmolLM2-135M QAT</h1>
 
         <article class="blog-post">
+            <div class="date">July 6, 2025</div>
+            <p>
+                Afternoon: I had a dream last night where I called myself stupid. I did some stuff right, like deciding to use embeddings
+                for the positions instead of something like RoPE, because LUTs are easy to implement, but I also dumbed down the quantization a lot, for no reason (I think).
+                Here is the thing...the goal is to have a model that requires no FLOPS at inference time. How AQT does this is by quantizing
+                and dequantizing the weights while training. This allows the model to create weights that are robust to quantization, while 
+                still being floats. It is important that they are floats because torch does not allow you to train models (really to store
+                gradients) for non float (and imaginary) tensors. So, to quantize the weights you multiply by a scale factor, round to the 
+                nearest integer and clip to whatever scale you want (depending on the number of bits in the integer, I'm doing 8 bits so -127-128). 
+                After clipping, you end up with floats that are only integer values. You can then divide by the scale factor, and you are back to having floats. THe forward pass is performed
+                with these quantized + dequantized floats. The issue is that rounding is not a differentiable operation. So, to allow gradients to flow back they use straight through
+                estimators in AQT (I'm doing the same). What that means is that you basically allow the gradients to flow back unchanged. Cool. I did some very stilly stuff and some
+                less silly stuff. The first thing, is I set the scale to be 1/128 and it is uniform for every layer. Based on some reading, people apply different scale factors either
+                per tensor or per channel. I decided not to do that, and to use 1/128 instead because it's a power of 2 so I can do it with bit-shifting on the FPGA. Except, I will 
+                never be doing the scaling on the FPGA. I will be using the quantized INT weights on the FPGA. So, I've been applying this horrible scaling for no reason. I also removed the 
+                zero point entierly to keep things simple, but all the quantization is performed in torch, so there was no need for me to effectively lobotomize the model like this. The other, 
+                less silly thing is that I am using ReLU instead of GeLU. Here is the thing, with 16 bit activations, there are 2^16 possible values. So, I could just lean into LUTs more,
+                and just have a GeLU look up table. The same applies to SiLU or any other activation function. It isn't even much memory (Like 125 KiB and I can just store it in B/URAM).
+                I stopped training really late last night because the loss wasn't decreasing enough. Hopefully these changes help. 
+        
+            </p>
+        </article>
+
+        <article class="blog-post">
             <div class="date">July 5, 2025</div>
             <p>
                 Afternoon: I've started training my own model. I created custom int only classes for everything. I figured that this would be the easiest to actually implement on the FPGA because I'll be able to 
@@ -34,7 +58,7 @@
                 I need this to go quicker. I've also done a lot of stuff to make my life slightly easier, like the scale for all the quantization stuff is 1/128 rather than a learnable parameter. Oh well.
             </p>
             <p>
-                Set up the GPT2 model. I started a training run, looks like it will take 5 hours (I've stepped up the batch size to 64). But, I decided to save the tokenized dataset instead of having to tokenize it 
+                Evening: Set up the GPT2 model. I started a training run, looks like it will take 5 hours (I've stepped up the batch size to 64). But, I decided to save the tokenized dataset instead of having to tokenize it 
                 every time, so that's running now. Then I'll start the training process and see how it goes. Hopefully, if this gets done by tonight (can generate text) I'll go back to the FPGA stuff and have that done in a 
                 week or so. I'll revisit this for sure. There is a lot of interesting stuff for me to explore here that I'm excited about. Anyway, better to focus on one thing at a time. 
             </p>
