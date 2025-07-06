@@ -10,6 +10,17 @@
     <main>
         <h1>FPGA LLM</h1>
         <article class="blog-post">
+            <div class="date">July 6, 2025 </div>
+            <p>I've spent the last several days on SmolLM135MAQT. I've learned a lot about quantization, and I have a much clearer picture about how a 0 FLOP model
+            can be deployed on an FPGA. While having a 0 FLOP model is still a goal of mine, and one that I will continue working on simultaneuously, the last few days 
+            have made it feel like taking the easy way out. I didn't want to start with floating point operations because FPGAs are not built for them. This doesn't
+            mean that they cannot perform them though, it simply means that multiplication and addition take multiple clock cycles. But, I'm okay with that actually. 
+            So, I've decided that I am going to start working on an FPU. I will continue to work on training a 0 FLOP model. But, it is not for FPGALLM. It is only 
+            to understand and work with AQT. For FPGALLM I am going to deploy GPT2 (I'm starting with GPT2 because pos-embs are easier than RoPE...but even the sin and
+            cos stuff can be a LUT, so I plan to skip SmolLM and do GPT2 and then LLama3.2 1B, 3B and finally some 8B model). So I am starting with the FPU. Then I'll move from there.
+            </p>
+        </article>
+        <article class="blog-post">
             <div class="date">July 1, 2025</div>
             <p> Afternoon: I'm not going to lie, I didn't think this would take me more than a month. But, here we are. The AXI memory test ran, which is a start,
                 but I forgot to set the HBM status registers. So, the testbench that polls that register never got past the AXI setup. It is much, much faster though.
