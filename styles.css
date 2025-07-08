@@ -48,3 +48,25 @@ body {
 .home-page {
     font-size: 1.2em;
 }
+
+.back-button {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #0066cc;
+    text-decoration: none;
+    font-size: 0.9em;
+    padding: 8px 12px;
+    border: 1px solid #0066cc;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: #0066cc;
+    color: white;
+}
+
+.back-button::before {
+    content: "← ";
+    margin-right: 4px;
+}
