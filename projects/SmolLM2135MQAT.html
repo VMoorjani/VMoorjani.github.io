@@ -10,6 +10,22 @@
     <main>
         <h1>SmolLM2-135M QAT</h1>
 
+        <article class="blog-post"> 
+            <div class="date">July 10, 2025</div>
+            <p>
+                I've had to take a break for the last few days because of my parallel programming exam but I'm back to this now. I decided to start 
+                small with a simple model made up of only linear layers. So, I made a model that is only 3 layers for MNIST to compare how the quantized layers
+                do vs regular linear layers. So I trained it, and the difference is pretty much negligible. 
+                I'm still using QAT, which means you do quantization -> dequantization -> forward pass -> quantization -> dequantization -> backward pass. This means that the 
+                actual matmul still happens as floats. Even if I fold the scaling factor into the weights it still needs to be dequantized. 
+                I'll move on from here. Not having FPGALLM rely on this working anymore
+                takes some of the pressure off and I can do both of them simultaneously. Anyway, it seems that QAT works, I do want to see if it scales up but 
+                I should also see how to get the int only stuff to work. 
+            </p>
+
+            <img src="../images/SmolLM2135MQAT/QuantizedMNISTLinearModel.png" alt="MNIST INT4">
+            <div class="image-caption">Loss and Accuracy of Quantized vs Regular Linear Layers on MNIST</div>
+        </article>
         <article class="blog-post">
             <div class="date">July 6, 2025</div>
             <p>
