@@ -9,6 +9,23 @@
 <body>
     <main>
         <h1>FPGA LLM</h1>
+        <article class = "blog-post">
+            <div class="date">July 11, 2025</div>
+            <p>
+                Morning: I spent this morning working on the FPU. I started by lookig up FPU implementations that already exist, and I found one that 
+                was quite interesting. It uses IEEE754 floats which is fine, but the interesting thing it does is that it converts all the 32 bit 
+                floats into 33 bit floats. Essentially, it converts all the sub-normal numbers into normal numbers. This basically means that in 
+                the logic for the operations, it doesn't need to check for sub-normal numbers and handle them seperately. While this is really cool, 
+                and potentially faster (can do fused multiply-add in 3 cycles), I haven't quite wrapped my head around the normalization process. 
+                I know what it does, I'm wasn't 100% sure about the how. So, I've implemented my own module to do the same thing. Next, I'm going 
+                to implement multiplication and addition. Then, fused multiply-add. If I can get all of this to work today, I can have a 
+                float matmul module by tomorrow. From there it should be fairly straight forward to get GPT2 running. I've decided to move to GPT2 
+                because I think the learned poition embeddings will be easier to implement than RoPE. I know I can do RoPE with a LUT as well, 
+                I just think that the GPT2 LUT will be easier. I'm definitly going to have to do RoPE at some point, especially if I want Llama. 
+                That also means that I will have to eventually implememnt a 16 bit FPU. Working on 32 bit for now. I also have to do this locally 
+                because I'm in New York and I don't want to get into a whole thing with AWS again. Anyway, FPU today, matmul tomorrow. 
+            </p>
+        </article>
         <article class="blog-post">
             <div class="date">July 6, 2025 </div>
             <p>I've spent the last several days on SmolLM135MAQT. I've learned a lot about quantization, and I have a much clearer picture about how a 0 FLOP model
