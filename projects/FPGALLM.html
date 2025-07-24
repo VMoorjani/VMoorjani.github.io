@@ -25,6 +25,21 @@
                 That also means that I will have to eventually implememnt a 16 bit FPU. Working on 32 bit for now. I also have to do this locally 
                 because I'm in New York and I don't want to get into a whole thing with AWS again. Anyway, FPU today, matmul tomorrow. 
             </p>
+            <p>
+                Afternoon: I was (still am) working on the adder, when I realized that I don't need to do extension from 32 to 33 bits on the FPGA. 
+                It's good that the module is implemented, and maybe I am missing some places where I do need to do it, but I can just load 
+                pseudo-extended weights into memory. All the operations are performed on 32 bit numbers anyway, so I can just have the 33 bit numbers
+                and do the operations on them. I can have a module that converts from 33 bits to 32 bits if required. Since this is all for inference, 
+                it makes things like this easier. 
+            </p>
+
+            <p>
+                Evening: The adder is done and seems to be working. I'm working on the multiplier now. The original implementation had it
+                all pipelined, which meant that addition and multiplication happen in 3 clock cycles, but you can increase your clock speed 
+                because your longest path is much shorter. I'm not doing that right now because pipelining makes it harder to implement. 
+                Because mine is purely combinational, in simulation everthing is instant. I know that this won't happen in prctice, and 
+                my max frequency will be lower. I'll change this to a pipelined implementation later.
+            </p>
         </article>
         <article class="blog-post">
             <div class="date">July 6, 2025 </div>
