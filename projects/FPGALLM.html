@@ -9,6 +9,27 @@
 <body>
     <main>
         <h1>FPGA LLM</h1>
+        <article class="blog-post"> 
+            <div class="date">July 23, 2025</div>
+            <p>
+                Night: It has been really long since I posted an update here and that is because things have been going quite slowly over the last week. I've been moving around a lot 
+                because of different appointments and things so I haven't had the chance to like sit down and do real focused work. Anyway, I'm home now and that should hopefully change. Spending 
+                some time tonight working on verifying everything I have implemented so far for the FPU. That's all I'll do tonight. Tomorrow I will work on the FP32 (actually 33 bit) matmul module.
+            </p>
+            <p>
+                Later Night: Okay so I've been using cocotb and pytest to test all of this stuff. Unfortunately, cocotb doesn't seem to support 
+                break statements in loops, and automatic variables. So, I've kind of jankily moved stuff around to get it to run. It did expose 
+                some issues I had in the logic. I also wrote a test for the fma module that actually performs a matmul. Basically it creates random 
+                matrices and multiplies them using the fma module. It then compares the results with the actual matmul. After ironing out the 
+                issues I was having the test seems to pass. I'll test it more extensively tomorrow, but this is not a bad place to be. Having 
+                a module that can perform fma pretty much means I can do matmuls (however innefficiently). If my testing tomorrow doesn't reveal 
+                any issues, I'll implement the matmul module. If I string enough of them together I should have GPT2 running soon. For my leading zero counter 
+                I just used a loop which is a bad idea because the longest combinational path will be so long, which means my max frequency will be so low. 
+                The good thing is I can write the module in a way that uses a priority encoder which will be much shorter. I had done this earlier but then I needed 
+                lzcs for differently sized inputs. So, I'm just going to use the for loop for now, figure out all the different widths I need to support (because of intermediate values)
+                and then I can implement an lzc with a priority encoder for each of those. Sounds good. 
+            </p>
+        </article>
         <article class = "blog-post">
             <div class="date">July 11, 2025</div>
             <p>
