@@ -22,6 +22,17 @@
                 33 bit weights, and use those. I'm not changing the FPU now though, because I first want to get everything around it working. 
                 Working on matmul now. 
             </p>
+            <p>
+                Night: Alright, so there is finally some measurable progress. The matmul module seems to be working. There are obviously 
+                a lot of optimizations that can be made, and I will get to those eventually, but this is a good start. I've been working 
+                on all of this locally because the Vivado GUI is nice to have for simulations and stuff, but I can now move over to EC2. 
+                It takes ~400 ns to perform a 2x2 * 2x2 matmul. This is with registers so there is no overhead for memory accesses. 
+                This will scale quadratically without memory acccesses, and those will add significant delays.
+                This is absolutely not good enough. The easiest way to speed this up is to just add in more FPUs and process the elements 
+                in parallel. A slightly cleaner way to do this is to use the FPUs pipelining and process more than one element at a time. 
+                I'll make both of these changes eventually. For now I'm going to put this on EC2, change it to load stuff in from DRAM, 
+                and get GPT2 running. 
+            </p>
         </article>
         <article class="blog-post">
             <div class="date">July 24, 2025</div>
