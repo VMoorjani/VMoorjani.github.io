@@ -9,6 +9,30 @@
 <body>
     <main>
         <h1>FPGA LLM</h1>
+        <article class="blog-post">
+            <div class="date">July 25, 2025</div>
+            <p>
+                Evening: I've been working with taneroksuz's FPU implementation. I gave the code to Claude, GPT, Gemini and for some reason 
+                all of them couldn't write a test bench for it. So, I went through the test bench and spent a while looking at all the signals 
+                before figuring out the issue. The reset is active low so it was always in reset mode. Also, the enable signal needs to be 
+                high for the entire operation. Anyway, with all of those out of the way I was able to get the test bench for addition to run. 
+                There are still some issues with the current implementation. There is an FPU unit that wraps all the other modules. This itself 
+                is not a problem, but it accepts 32 bit inputs, and then converts them to/from the pseudoextended format for a 33 bit output. 
+                Since all the weights are pre-loaded, I don't need to perform the conversion for every operation. I can just store the 
+                33 bit weights, and use those. I'm not changing the FPU now though, because I first want to get everything around it working. 
+                Working on matmul now. 
+            </p>
+        </article>
+        <article class="blog-post">
+            <div class="date">July 24, 2025</div>
+            <p>
+                Evening: So as it turns out, sometimes when things go wrong with cocotb tests, and it wasn't actually able to sumulate it, 
+                it still reports that the test passed because the python stuff ran. I only figured this out while trying to find the log files 
+                and actually printing out all the logs. So, it is possible that it doesn't actually work, it only reports that it does. 
+                So I'll verify everything, but it is also a good idea to write an actual SV test bench and run it straight from vivado. 
+            </p>
+        </article>
+
         <article class="blog-post"> 
             <div class="date">July 23, 2025</div>
             <p>
